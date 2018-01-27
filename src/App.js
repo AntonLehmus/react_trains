@@ -4,6 +4,7 @@ import _ from 'lodash';
 import './App.css';
 
 import SearchBar from './components/search_bar';
+import TraisTable from './components/trains_table';
 
 const ROOT_URL = 'https://rata.digitraffic.fi/api/v1';
 
@@ -35,7 +36,7 @@ class App extends Component {
         const passenger_stations = _.filter(response.data, function(o) { return o.passengerTraffic; });
         this.setState({
           stations:passenger_stations,
-          selectedStation: {},
+          activeStation: {},
         });
       })
       .catch((error) => {
@@ -71,7 +72,7 @@ class App extends Component {
         (o) => { return _.isEqual(_.lowerCase(o.stationName), _.lowerCase(this.state.term)); } );
         
     if(station) {
-        this.setState({selectedStation: station, term: ''});
+        this.setState({activeStation: station, term: ''});
         this.fetchTrains(station.stationShortCode);
     }
   }
@@ -81,6 +82,7 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar onSubmit={this.handleSearchSubmit} onChange={this.handleSearchChange} term={this.state.term}/>
+        <TraisTable activeStation={this.state.activeStation} trains={this.state.trains}/>
       </div>
     );
   }
