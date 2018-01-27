@@ -25,6 +25,7 @@ class App extends Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.sortTrains = this.sortTrains.bind(this);
+    this.stationCodeToName = this.stationCodeToName.bind(this);
   };
 
   componentDidMount() {
@@ -70,8 +71,8 @@ class App extends Component {
         arriving_trains.push({
           'name': `${t.trainType} ${t.trainNumber}`,
           'time': arrival_row.scheduledTime,
-          'from': t.timeTableRows[0].stationShortCode,
-          'to': t.timeTableRows[t.timeTableRows.length - 1].stationShortCode,
+          'from': this.stationCodeToName(t.timeTableRows[0].stationShortCode),
+          'to': this.stationCodeToName(t.timeTableRows[t.timeTableRows.length - 1].stationShortCode),
           'platform': arrival_row.commercialTrack,
           'cancelled': t.cancelled
         });
@@ -81,8 +82,8 @@ class App extends Component {
         departing_trains.push({
           'name': `${t.trainType} ${t.trainNumber}`,
           'time': departure_row.scheduledTime,
-          'from': t.timeTableRows[0].stationShortCode,
-          'to': t.timeTableRows[t.timeTableRows.length - 1].stationShortCode,
+          'from': this.stationCodeToName(t.timeTableRows[0].stationShortCode),
+          'to': this.stationCodeToName(t.timeTableRows[t.timeTableRows.length - 1].stationShortCode),
           'platform': departure_row.commercialTrack,
           'cancelled': t.cancelled
         });
@@ -97,19 +98,24 @@ class App extends Component {
   }
 
   handleSearchSubmit() {
+    let term = '';
     //dirty,dirty bodge for Helsinkis double stations
-    if (_.isEqual(_.lowerCase(this.state.term), "helsinki")) {
-      this.setState({ term: 'Helsinki asema' });
-    }
+    _.isEqual(_.lowerCase(this.state.term), "helsinki") ?  term = 'Helsinki asema' :  term = this.state.term;
+    
 
     //find user's station from stations array
     const station = _.find(this.state.stations,
-      (o) => { return _.isEqual(_.lowerCase(o.stationName), _.lowerCase(this.state.term)); });
+      (o) => { return _.isEqual(_.lowerCase(o.stationName), _.lowerCase(term)); });
 
     if (station) {
       this.setState({ selectedStation: station, term: '' });
       this.fetchTrains(station.stationShortCode);
     }
+  }
+
+  stationCodeToName(code){
+    let station = _.find(this.state.stations,{stationShortCode: code});
+    return station.stationName;
   }
 
 
