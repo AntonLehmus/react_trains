@@ -68,7 +68,7 @@ class App extends Component {
 
       if(!_.isEmpty(arrival_row)){
         arriving_trains.push({
-          'train': `${t.trainType} ${t.trainNumber}`,
+          'name': `${t.trainType} ${t.trainNumber}`,
           'time': arrival_row.scheduledTime,
           'from': t.timeTableRows[0].stationShortCode,
           'to': t.timeTableRows[t.timeTableRows.length - 1].stationShortCode,
@@ -79,7 +79,7 @@ class App extends Component {
 
       if(!_.isEmpty(departure_row)){
         departing_trains.push({
-          'train': `${t.trainType} ${t.trainNumber}`,
+          'name': `${t.trainType} ${t.trainNumber}`,
           'time': departure_row.scheduledTime,
           'from': t.timeTableRows[0].stationShortCode,
           'to': t.timeTableRows[t.timeTableRows.length - 1].stationShortCode,
