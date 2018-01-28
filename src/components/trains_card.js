@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import TrainsTable from './trains_table';
+import Loading from './loading';
 
 class TrainsCard extends Component {
 
@@ -19,6 +20,15 @@ class TrainsCard extends Component {
             return (
                 <div className="col-12">
                     <h4>Please select a station</h4>
+                </div>
+            );
+        }
+
+        if(this.props.loading){
+            return(
+                <div>
+                    <h2>{this.props.selectedStation.stationName}</h2>
+                    <Loading/>
                 </div>
             );
         }

@@ -5,6 +5,8 @@ import './App.css';
 
 import SearchBar from './components/search_bar';
 import TraisCard from './components/trains_card';
+import Loading from './components/loading';
+
 
 const ROOT_URL = 'https://rata.digitraffic.fi/api/v1';
 
@@ -19,7 +21,9 @@ class App extends Component {
       arriving_trains: [],
       departing_trains: [],
       term: '',
-      station_found:null
+      station_found:null,
+      stations_loading:true,
+      trains_loading:false
     };
 
     this.fetchStations = this.fetchStations.bind(this);
@@ -43,6 +47,7 @@ class App extends Component {
         this.setState({
           stations: passenger_stations,
           selectedStation: {},
+          stations_loading:false,
         });
       })
       .catch((error) => {
@@ -97,7 +102,7 @@ class App extends Component {
       }
     });
 
-    this.setState({ arriving_trains, departing_trains });
+    this.setState({ arriving_trains, departing_trains, trains_loading:false });
   }
 
   handleSearchChange(term) {
@@ -106,7 +111,7 @@ class App extends Component {
 
   handleSearchSubmit() {
 
-    this.setState({ arriving_trains:[], departing_trains:[],selectedStation: '' });
+    this.setState({ arriving_trains:[], departing_trains:[],selectedStation: '',trains_loading:true });
 
     const term = this.state.term;
 
@@ -135,6 +140,14 @@ class App extends Component {
 
 
   render() {
+    const loading = this.state.stations_loading;
+
+    if(loading){
+      return(
+        <Loading/>
+      );
+    }
+    
     return (
       <div className="App">
         <div className="col-12">
@@ -142,7 +155,7 @@ class App extends Component {
           term={this.state.term} stations={this.state.stations}/>
         </div>
         <div className="col-12">
-          <TraisCard selectedStation={this.state.selectedStation} 
+          <TraisCard selectedStation={this.state.selectedStation} loading={this.state.trains_loading}
           departing={this.state.departing_trains} arriving={this.state.arriving_trains} stationFound={this.state.station_found}/>
         </div>
       </div>
