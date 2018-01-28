@@ -98,16 +98,18 @@ class App extends Component {
   }
 
   handleSearchSubmit() {
-    let term = '';
-    //dirty,dirty bodge for Helsinkis double stations
-    _.isEqual(_.lowerCase(this.state.term), "helsinki") ?  term = 'Helsinki asema' :  term = this.state.term;
-    
+
+    this.setState({ arriving_trains:[], departing_trains:[] });
+
+    const term = this.state.term;
 
     //find user's station from stations array
     const station = _.find(this.state.stations,
-      (o) => { return _.isEqual(_.lowerCase(o.stationName), _.lowerCase(term)); });
+      (o) => { return ( _.isEqual(_.lowerCase(o.stationName), _.lowerCase(term)) 
+        || _.isEqual(_.lowerCase(o.stationName), _.lowerCase(`${term} asema`))); });
+    
 
-    if (station) {
+    if (!_.isEmpty(station)) {
       this.setState({ selectedStation: station, term: '' });
       this.fetchTrains(station.stationShortCode);
     }
@@ -115,6 +117,9 @@ class App extends Component {
 
   stationCodeToName(code){
     let station = _.find(this.state.stations,{stationShortCode: code});
+    if(_.isEmpty(station)){
+      return code; 
+    }
     return station.stationName;
   }
 
@@ -130,3 +135,10 @@ class App extends Component {
 }
 
 export default App;
+
+/* 
+TODO:
+lataus pylpyrät
+ulkoasun siistiminen
+auto suggest
+*/
