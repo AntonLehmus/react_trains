@@ -150,11 +150,11 @@ class App extends Component {
     
     return (
       <div className="App">
-        <div className="col-12">
+        <div className="row">
           <SearchBar onSubmit={this.handleSearchSubmit} onChange={this.handleSearchChange}
           term={this.state.term} stations={this.state.stations}/>
         </div>
-        <div className="col-12">
+        <div>
           <TraisCard selectedStation={this.state.selectedStation} loading={this.state.trains_loading}
           departing={this.state.departing_trains} arriving={this.state.arriving_trains} stationFound={this.state.station_found}/>
         </div>

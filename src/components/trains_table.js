@@ -11,8 +11,8 @@ class TrainsTable extends Component {
         });
 
         return(
-            <div>
-                <table className="table table-striped">
+            <div className="col">
+                <table className="table table-striped table-sm">
                     <thead className="thead-inverse">
                         <tr>
                             <th>Train</th>

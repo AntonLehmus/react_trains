@@ -10,7 +10,7 @@ class TrainsCard extends Component {
 
         if (this.props.stationFound === false) {
             return (
-                <div className="col-12">
+                <div className="col">
                     <h4>Station not found</h4>
                 </div>
             );
@@ -18,7 +18,7 @@ class TrainsCard extends Component {
 
         if (_.isEmpty(this.props.selectedStation)) {
             return (
-                <div className="col-12">
+                <div className="col">
                     <h4>Please select a station</h4>
                 </div>
             );
@@ -26,7 +26,7 @@ class TrainsCard extends Component {
 
         if(this.props.loading){
             return(
-                <div>
+                <div className="col">
                     <h2>{this.props.selectedStation.stationName}</h2>
                     <Loading/>
                 </div>
@@ -36,13 +36,13 @@ class TrainsCard extends Component {
         return (
             <div>
                 <h2>{this.props.selectedStation.stationName}</h2>
-                <div className="card">
+                <div className="card col">
                     <div className="card-block">
                         <h4 className="card-title">Arriving</h4>
                         <TrainsTable trains={this.props.arriving} />
                     </div>
                 </div>
-                <div className="card">
+                <div className="card col">
                     <div className="card-block">
                         <h4 className="card-title">Departig</h4>
                         <TrainsTable trains={this.props.departing} />

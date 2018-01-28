@@ -1,19 +1,19 @@
-#search_bar{
-    margin-top: 10px;
-    margin-bottom: 10px;
+#search_bar {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .react-autosuggest__suggestions-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  .react-autosuggest__suggestion {
-    cursor: pointer;
-    padding: 10px 20px;
-  }
-  
-  .react-autosuggest__suggestion--highlighted {
-    background-color: #fff;
-  }
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #fff;
+}

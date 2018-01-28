@@ -11,7 +11,7 @@ class TrainRow extends Component {
         return(
             <tr className={clsName}>
                 <td>{this.props.train.name}</td>
-                <td>{time.format('DD.MM HH:MM')}</td>
+                <td>{time.format('HH:MM')}</td>
                 <td>{this.props.train.from}</td>
                 <td>{this.props.train.to}</td>
                 <td>{this.props.train.platform}</td>

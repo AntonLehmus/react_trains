@@ -72,11 +72,18 @@ class SearchBar extends Component {
             onChange: this.handleChange,
             className: "form-control"
         };
+        const theme = {
+            container: ' col-9 mr-0 pr-0',
+            suggestionsList: 'react-autosuggest__suggestions-list',
+            suggestion: 'react-autosuggest__suggestion',
+            suggestionHighlighted: 'react-autosuggest__suggestion--highlighted',
+        }
+
 
         return (
-            <div id="search_bar">
-                <form className="form form-inline" onSubmit={this.handleSubmit}>
-                    <div className="input-group col-12">
+            <div id="search_bar" className="col">
+                <form className="form" onSubmit={this.handleSubmit}>
+                <div className="input-group">
 
                         <Autosuggest
                             suggestions={suggestions}
@@ -84,12 +91,14 @@ class SearchBar extends Component {
                             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                             getSuggestionValue={this.getSuggestionValue}
                             renderSuggestion={this.renderSuggestion}
-                            inputProps={inputProps} />
-
+                            inputProps={inputProps}
+                            theme={theme}
+                            />
                         <span className="input-group-addon">
-                            <button className="btn btn-primary" type="submit" id="search_submit"><i className="fa fa-search "></i> Go!</button>
+                        <button className="btn btn-primary" type="submit" id="search_submit"><i className="fa fa-search "></i> Go!</button>
                         </span>
                     </div>
+                    
                 </form>
             </div>
         );
