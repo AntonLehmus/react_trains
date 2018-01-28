@@ -6,6 +6,15 @@ import TrainsTable from './trains_table';
 class TrainsCard extends Component {
 
     render() {
+        
+        if(this.props.stationFound === false){
+            return(
+                <div className="col-xs-12">
+                    <h4>Station not found</h4>
+                </div>
+            );
+        }
+
         if(_.isEmpty(this.props.selectedStation)){
             return(
                 <div className="col-xs-12">

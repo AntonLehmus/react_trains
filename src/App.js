@@ -18,7 +18,8 @@ class App extends Component {
       selectedStation: {},
       arriving_trains: [],
       departing_trains: [],
-      term: ''
+      term: '',
+      station_found:null
     };
 
     this.fetchStations = this.fetchStations.bind(this);
@@ -36,7 +37,9 @@ class App extends Component {
   fetchStations() {
     axios.get(`${ROOT_URL}/metadata/stations`)
       .then((response) => {
-        const passenger_stations = _.filter(response.data, function (o) { return o.passengerTraffic; });
+        
+        const passenger_stations = _.filter(response.data, { passengerTraffic: true });
+        
         this.setState({
           stations: passenger_stations,
           selectedStation: {},
@@ -66,6 +69,10 @@ class App extends Component {
     trains.forEach(t => {
       let arrival_row = _.find(t.timeTableRows, { type: "ARRIVAL", stationShortCode: this.state.selectedStation.stationShortCode });
       let departure_row = _.find(t.timeTableRows, { type: "DEPARTURE", stationShortCode: this.state.selectedStation.stationShortCode });
+
+      /*This way of pickign from and to staions is not always accurate
+      *TODO: pick the actual passenger traffic stations
+      */
 
       if(!_.isEmpty(arrival_row)){
         arriving_trains.push({
@@ -99,7 +106,7 @@ class App extends Component {
 
   handleSearchSubmit() {
 
-    this.setState({ arriving_trains:[], departing_trains:[] });
+    this.setState({ arriving_trains:[], departing_trains:[],selectedStation: '' });
 
     const term = this.state.term;
 
@@ -110,8 +117,11 @@ class App extends Component {
     
 
     if (!_.isEmpty(station)) {
-      this.setState({ selectedStation: station, term: '' });
+      this.setState({ selectedStation: station, term: '', station_found: true });
       this.fetchTrains(station.stationShortCode);
+    }
+    else{
+      this.setState({ station_found: false });
     }
   }
 
@@ -128,7 +138,8 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar onSubmit={this.handleSearchSubmit} onChange={this.handleSearchChange} term={this.state.term} />
-        <TraisCard selectedStation={this.state.selectedStation} departing={this.state.departing_trains} arriving={this.state.arriving_trains} />
+        <TraisCard selectedStation={this.state.selectedStation} 
+        departing={this.state.departing_trains} arriving={this.state.arriving_trains} stationFound={this.state.station_found}/>
       </div>
     );
   }
