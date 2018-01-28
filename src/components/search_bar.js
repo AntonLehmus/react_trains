@@ -24,10 +24,11 @@ class SearchBar extends Component {
     
 
     return (
+        <div id="search_bar">
         <form className="form form-inline" onSubmit={this.handleSubmit}>
-            <div className="input-group col-sm-12">
+            <div className="input-group col-12">
 
-                <input type="text" className="form-control" id="search_bar"
+                <input type="text" className="form-control"
                 placeholder="Search for station" value={term} onChange={this.handleChange} />
 
                 <span className="input-group-addon">
@@ -35,6 +36,7 @@ class SearchBar extends Component {
                 </span>
             </div>
       </form>
+      </div>
     );
   }
 

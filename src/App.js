@@ -137,9 +137,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar onSubmit={this.handleSearchSubmit} onChange={this.handleSearchChange} term={this.state.term} />
+        <div className="col-12">
+          <SearchBar onSubmit={this.handleSearchSubmit} onChange={this.handleSearchChange} term={this.state.term}/>
+        </div>
+        <div className="col-12">
         <TraisCard selectedStation={this.state.selectedStation} 
         departing={this.state.departing_trains} arriving={this.state.arriving_trains} stationFound={this.state.station_found}/>
+        </div>
       </div>
     );
   }
